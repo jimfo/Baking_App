@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="drkGreen">#006400</color>
+    <color name="activityBackground">#263238</color>
+    <color name="cardColor">#455A64</color>
+    <color name="textColor">#B0BEC5</color>
+    <color name="unselectedTabText">#78909C</color>
+</resources>

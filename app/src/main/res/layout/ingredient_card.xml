@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ingredient_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:textColor="@color/textColor"
+        android:singleLine="false"
+        android:textSize="16sp"
+        android:fontFamily="casual">
+    </TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_view_space"
+        android:background="@color/activityBackground"/>
+
+</LinearLayout>

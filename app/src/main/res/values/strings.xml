@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="json_url">
+        https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json
+    </string>
+    <string name="inputstreamError">Error with creating URL</string>
+    <string name="responseCodeError">Error Response Code</string>
+    <string name="jsonError">Error receiving Json</string>
+    <string name="utf8">UTF-8</string>
+    <string name="get">GET</string>
+    <string name="urlError">Error creating url</string>
+    <string name="parseError">Problem parsing the MOVIE JSON results</string>
+    <string name="noResource">The resource you requested could not be found.</string>
+    <string name="results">results</string>
+    <string name="dna">Data not available</string>
+    <string name="id">id</string>
+    <string name="name">name</string>
+    <string name="ingredients">ingredients</string>
+    <string name="steps">steps</string>
+    <string name="quantity">quantity</string>
+    <string name="measure">measure</string>
+    <string name="ingredient">ingredient</string>
+    <string name="shortDescription">shortDescription</string>
+    <string name="description">description</string>
+    <string name="videoURL">videoURL</string>
+    <string name="thumbnailURL">thumbnailURL</string>
+    <string name="selected">selected</string>
+    <string name="servings">servings</string>
+    <string name="serving_size">Serving size :</string>
+    <string name="ingredientKey">ingredients</string>
+    <string name="stepKey">steps</string>
+    <string name="stepLabel">Steps</string>
+    <string name="ingredientLabel">Recipe Ingredients</string>
+    <string name="recipeIntro">Recipe Introduction</string>
+    <string name="recipeNameKey">recipeNameKey</string>
+    <string name="titleKey">title</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>
