@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/recipe_detail_ll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.RecipeDetail">
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="400dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/recyclerview_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ingredientLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/standard_padding"
+                android:text="@string/ingredientLabel"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ingredient_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:paddingEnd="@dimen/standard_padding"
+                android:paddingLeft="@dimen/standard_padding"
+                android:paddingRight="@dimen/standard_padding"
+                android:paddingStart="@dimen/standard_padding">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/stepLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="casual"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/standard_padding"
+                android:text="@string/stepLabel"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/step_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:paddingEnd="@dimen/standard_padding"
+                android:paddingLeft="@dimen/standard_padding"
+                android:paddingRight="@dimen/standard_padding"
+                android:paddingStart="@dimen/standard_padding">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:layout_width="2dp"
+        android:id="@+id/separator"
+        android:layout_height="match_parent"
+        android:background="@color/textColor"/>
+
+    <LinearLayout
+        android:id="@+id/exoplayer_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/playerView"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:padding="@dimen/standard_padding"/>
+
+        <TextView
+            android:id="@+id/step_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_padding"
+            android:background="@color/cardColor"
+            android:fontFamily="casual"
+            android:padding="@dimen/standard_padding"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

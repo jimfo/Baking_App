@@ -1,74 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
+    android:id="@+id/detail_sv"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detail_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.RecipeDetail">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/ingredientLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ingredientLabel"
-                android:padding="@dimen/standard_padding"
-                android:textColor="@color/textColor"
-                android:textSize="16sp"
-                android:fontFamily="casual"
-                android:gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/ingredientLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/standard_padding"
+            android:text="@string/ingredientLabel"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ingredient_rv"
-            android:paddingLeft="@dimen/standard_padding"
-            android:paddingStart="@dimen/standard_padding"
-            android:paddingRight="@dimen/standard_padding"
-            android:paddingEnd="@dimen/standard_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:paddingEnd="@dimen/standard_padding"
+            android:paddingLeft="@dimen/standard_padding"
+            android:paddingRight="@dimen/standard_padding"
 
-            android:focusable="false">
+            android:paddingStart="@dimen/standard_padding">
 
         </android.support.v7.widget.RecyclerView>
-
-            <!--<TextView-->
-                <!--android:id="@+id/ingredient_tv"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:focusable="true"-->
-                <!--android:padding="@dimen/standard_padding"-->
-                <!--android:textColor="@color/textColor"-->
-                <!--android:singleLine="false"-->
-                <!--android:textSize="16sp"-->
-                <!--android:fontFamily="casual"/>-->
 
         <TextView
             android:id="@+id/stepLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/stepLabel"
-            android:padding="@dimen/standard_padding"
-            android:textColor="@color/textColor"
-            android:textSize="16sp"
             android:fontFamily="casual"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:padding="@dimen/standard_padding"
+            android:text="@string/stepLabel"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/step_rv"
-                android:paddingLeft="@dimen/standard_padding"
-                android:paddingStart="@dimen/standard_padding"
-                android:paddingRight="@dimen/standard_padding"
-                android:paddingEnd="@dimen/standard_padding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/step_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:paddingEnd="@dimen/standard_padding"
+            android:paddingLeft="@dimen/standard_padding"
+            android:paddingRight="@dimen/standard_padding"
 
-                android:focusable="false">
+            android:paddingStart="@dimen/standard_padding">
 
-            </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

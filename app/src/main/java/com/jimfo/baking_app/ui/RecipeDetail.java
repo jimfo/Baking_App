@@ -2,7 +2,9 @@ package com.jimfo.baking_app.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
@@ -18,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.jimfo.baking_app.R;
 import com.jimfo.baking_app.adapter.DetailAdapter;
 import com.jimfo.baking_app.adapter.IngredientAdapter;
@@ -26,7 +30,9 @@ import com.jimfo.baking_app.adapter.StepAdapter;
 import com.jimfo.baking_app.model.Ingredient;
 import com.jimfo.baking_app.model.Recipe;
 import com.jimfo.baking_app.model.Step;
+import com.jimfo.baking_app.util.ExoPlayerUtils;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemClickListener {
@@ -36,15 +42,17 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
     private static final String RECIPE = "recipe";
     private Recipe mRecipe;
     private String mTitle;
-    private StepAdapter mStepAdapter;
-    private IngredientAdapter mIngredientAdapter;
     private RecyclerView mIngredientRV;
     private RecyclerView mStepRV;
     private ArrayList<Step> mSteps;
     private ArrayList<Ingredient> mIngredients;
-    private LinearLayout detailLL;
-    private TextView ingredientTv;
+    private TextView stepDescription;
+    private ExoPlayerUtils mPlayerUtils;
+    private long mPosition;
+    private Uri mVideoPath = null;
+    private SimpleExoPlayerView mPlayerView;
     private boolean mTwoPane;
+    private ActionBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +61,10 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
 
         mStepRV = findViewById(R.id.step_rv);
         mIngredientRV = findViewById(R.id.ingredient_rv);
-        detailLL = findViewById(R.id.detail_ll);
+        mPlayerView = findViewById(R.id.playerView);
+        mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
-        ActionBar bar = getSupportActionBar();
+        bar = getSupportActionBar();
 
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.activityBackground));
@@ -78,7 +87,7 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
             if (mRecipe != null) {
                 mSteps = new ArrayList<>(mRecipe.getmSteps());
                 mIngredients = new ArrayList<>(mRecipe.getmIngredients());
-
+                mTitle = mRecipe.getmName();
             }
         }
         else {
@@ -90,38 +99,45 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
 
                 if (mRecipe != null) {
                     mTitle = mRecipe.getmName();
-                    setTitle(mTitle);
-
                     mSteps = new ArrayList<>(mRecipe.getmSteps());
                     mIngredients = new ArrayList<>(mRecipe.getmIngredients());
-
-
-                    //displayIngredients(new ArrayList<>(mRecipe.getmIngredients()));
                 }
             }
         }
 
+        if(findViewById(R.id.recipe_detail_ll) != null && isLandscape()){
+            mTwoPane = true;
+            stepDescription = findViewById(R.id.step_description_tv);
+            stepDescription.setText(mSteps.get(0).getmDescription());
+        }
+        else if(findViewById(R.id.recipe_detail_ll) != null && !isLandscape()){
+            mTwoPane = false;
+            setupPortraitMode();
 
-
-//        if(findViewById(R.id.recipe_detail_ll) != null && checkOrientation()){
-//            mTwoPane = true;
-//            mStepAdapter = new StepAdapter(this, this, new ArrayList<>(mRecipe.getmSteps()));
-//            mStepRV.setLayoutManager(new LinearLayoutManager(this));
-//            mStepRV.setAdapter(mStepAdapter);
-//            displayIngredients(new ArrayList<>(mRecipe.getmIngredients()));
-//            mSteps = new ArrayList<>(mRecipe.getmSteps());
-//        }
+        }
+        setTitle(mTitle);
         setUpAdapters(mSteps, mIngredients);
     }
 
-    public void setUpAdapters(ArrayList<Step> steps, ArrayList<Ingredient> ingredients){
-        mIngredientAdapter = new IngredientAdapter(getApplicationContext(), ingredients);
-        mIngredientRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mIngredientRV.setAdapter(mIngredientAdapter);
+    public void setupPortraitMode(){
+        LinearLayout exoplayerLL = findViewById(R.id.exoplayer_ll);
+        ScrollView scrollView = findViewById(R.id.scrollview);
 
-        mStepAdapter = new StepAdapter(this, this, steps);
+        scrollView.getLayoutParams().width = WindowManager.LayoutParams.MATCH_PARENT;
+        View separator = findViewById(R.id.separator);
+        exoplayerLL.setVisibility(View.GONE);
+        separator.setVisibility(View.GONE);
+    }
+
+    public void setUpAdapters(ArrayList<Step> steps, ArrayList<Ingredient> ingredients){
+
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(getApplicationContext(), ingredients);
+        mIngredientRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mIngredientRV.setAdapter(ingredientAdapter);
+
+        StepAdapter stepAdapter = new StepAdapter(this, this, steps);
         mStepRV.setLayoutManager(new LinearLayoutManager(this));
-        mStepRV.setAdapter(mStepAdapter);
+        mStepRV.setAdapter(stepAdapter);
     }
 
     @Override
@@ -131,31 +147,14 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
         outState.putParcelable(RECIPE, mRecipe);
         outState.putParcelableArrayList(STEPS, mSteps);
         outState.putParcelableArrayList(INGREDIENTS, mIngredients);
-
     }
 
-    private boolean checkOrientation(){
+    private boolean isLandscape(){
 
         int orientation = getResources().getConfiguration().orientation;
 
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
-
-//    public void displayIngredients(ArrayList<Ingredient> ingredients){
-//
-//        ingredientTv.setText("");
-//
-//        for(Ingredient ingredient : ingredients){
-//            ingredientTv.append(ingredient.getmQuantity() + " ");
-//            ingredientTv.append(ingredient.getmMeasure() + " ");
-//            ingredientTv.append(ingredient.getmIngredient() + "\n");
-//        }
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,10 +173,26 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
 
     @Override
     public void onItemClickListener(int itemId) {
+
         Step step = mSteps.get(itemId);
-        Intent i = new Intent(this, StepActivity.class);
-        i.putExtra(getResources().getString(R.string.stepKey), step);
-        i.putExtra(getResources().getString(R.string.titleKey), mTitle);
-        startActivity(i);
+        mVideoPath = Uri.parse(step.getmVideoUrl());
+
+        if (mTwoPane){
+            mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
+            mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
+                    (getResources(), R.drawable.no_video));
+
+            mPlayerUtils.initializeMediaSession();
+            mPlayerUtils.initializePlayer(mVideoPath, mPosition);
+            bar.setSubtitle(step.getmShortDescription());
+            stepDescription.setText(step.getmDescription());
+        }
+        else {
+
+            Intent i = new Intent(this, StepActivity.class);
+            i.putExtra(getResources().getString(R.string.stepKey), step);
+            i.putExtra(getResources().getString(R.string.titleKey), mTitle);
+            startActivity(i);
+        }
     }
 }
