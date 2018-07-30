@@ -22,7 +22,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.jimfo.baking_app.ui.StepActivity;
 
 public class ExoPlayerUtils implements ExoPlayer.EventListener  {
 
@@ -97,7 +96,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
             mExoPlayer.seekTo(position);
 
             // Set the ExoPlayer.EventListener to this activity.
-            mExoPlayer.addListener(this);
+            //            mExoPlayer.addListener(this);
 
             // Prepare the MediaSource.
             String userAgent = Util.getUserAgent(mContext, "BakingApp");
@@ -110,6 +109,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
 
     public void releasePlayer() {
         if (mExoPlayer != null) {
+            setmPosition(mExoPlayer.getCurrentPosition());
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;

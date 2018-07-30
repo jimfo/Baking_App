@@ -6,10 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.PersistableBundle;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -20,19 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.jimfo.baking_app.R;
-import com.jimfo.baking_app.adapter.DetailAdapter;
 import com.jimfo.baking_app.adapter.IngredientAdapter;
-import com.jimfo.baking_app.adapter.RecipeAdapter;
 import com.jimfo.baking_app.adapter.StepAdapter;
 import com.jimfo.baking_app.model.Ingredient;
 import com.jimfo.baking_app.model.Recipe;
 import com.jimfo.baking_app.model.Step;
 import com.jimfo.baking_app.util.ExoPlayerUtils;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemClickListener {
@@ -195,4 +190,5 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
             startActivity(i);
         }
     }
+
 }
