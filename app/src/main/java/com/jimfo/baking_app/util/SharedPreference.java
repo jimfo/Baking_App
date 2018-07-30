@@ -1,4 +1,4 @@
-package com.jimfo.baking_app;
+package com.jimfo.baking_app.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import java.util.List;
 public class SharedPreference {
 
     public static final String PREFS_NAME = "Ingredient_List";
+    public static final String RECIPE_TITLE = "recipe_title";
     public static final String INGREDIENTS = "Ingredients";
 
     public SharedPreference() {
@@ -21,13 +22,12 @@ public class SharedPreference {
 
     public void saveIngredients(Context context, List<Ingredient> ingredients) {
 
-        SharedPreferences settings;
+        SharedPreferences ingredientList;
         SharedPreferences.Editor editor;
 
-        settings = context.getSharedPreferences(PREFS_NAME,
-                Context.MODE_PRIVATE
-        );
-        editor = settings.edit();
+        ingredientList = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        editor = ingredientList.edit();
 
         Gson gson = new Gson();
         String jsonIngredients = gson.toJson(ingredients);

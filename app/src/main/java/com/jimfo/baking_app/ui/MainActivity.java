@@ -3,6 +3,7 @@ package com.jimfo.baking_app.ui;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,20 +20,20 @@ import android.widget.RemoteViews;
 import com.jimfo.baking_app.BakingAppWidget;
 import com.jimfo.baking_app.R;
 import com.jimfo.baking_app.RecipeTask;
-import com.jimfo.baking_app.SharedPreference;
 import com.jimfo.baking_app.adapter.RecipeAdapter;
 import com.jimfo.baking_app.model.Ingredient;
 import com.jimfo.baking_app.model.Recipe;
+import com.jimfo.baking_app.util.SharedPreference;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecipeTask.PostExecuteListener,
         RecipeAdapter.ItemClickListener {
 
-    private static final String ACTION_DISPLAY_INGREDIENTS = "com.jimfo.baking_app.action.display_ingredients";
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TITLE = "title";
     private RecyclerView mRecyclerView;
     private ArrayList<Recipe> mRecipes;
-    private RecipeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +64,15 @@ public class MainActivity extends AppCompatActivity implements RecipeTask.PostEx
 
     @Override
     public void onItemClickListener(int itemId) {
-        
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.baking_app_widget);
         ComponentName thisWidget = new ComponentName(this, BakingAppWidget.class);
         ArrayList<Ingredient> ingredients = new ArrayList<>(mRecipes.get(itemId).getmIngredients());
+
+        remoteViews.setTextViewText(R.id.header_tv, mRecipes.get(itemId).getmName());
+
+        Log.i(TAG, mRecipes.get(itemId).getmName());
 
         remoteViews.setTextViewText(R.id.appwidget_text, buildIngredientString(ingredients));
 
@@ -95,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements RecipeTask.PostEx
 
     private void saveToSharedPreferences(int i) {
 
+        SharedPreferences title = getApplicationContext().getSharedPreferences("MyPref", 0);
+        SharedPreferences.Editor editor = title.edit();
+        editor.putString(TITLE, mRecipes.get(i).getmName());
+        editor.apply();
+
         SharedPreference sharedPreference = new SharedPreference();
         sharedPreference.saveIngredients(this, new ArrayList<>(mRecipes.get(i).getmIngredients()));
     }
@@ -102,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements RecipeTask.PostEx
     @Override
     public void onPostExecute(ArrayList<Recipe> recipes) {
         mRecipes = recipes;
-        mAdapter = new RecipeAdapter(this, this, recipes);
+        RecipeAdapter mAdapter = new RecipeAdapter(this, this, recipes);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
         saveToSharedPreferences(0);

@@ -5,11 +5,12 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
 import com.jimfo.baking_app.model.Ingredient;
 import com.jimfo.baking_app.ui.MainActivity;
-import com.jimfo.baking_app.ui.RecipeDetail;
+import com.jimfo.baking_app.util.SharedPreference;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,9 @@ public class BakingAppWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
             int appWidgetId) {
+
+        SharedPreferences pref = context.getSharedPreferences("MyPref", 0);
+        String title = pref.getString("title", null);
 
         SharedPreference sharedPreference = new SharedPreference();
         ArrayList<Ingredient> mIngredients;
@@ -40,6 +44,7 @@ public class BakingAppWidget extends AppWidgetProvider {
             }
 
             views.setTextViewText(R.id.appwidget_text, str);
+            views.setTextViewText(R.id.header_tv, title);
         }
 
         // Instruct the widget manager to update the widget
@@ -52,21 +57,6 @@ public class BakingAppWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-    }
-
-    private static RemoteViews getBakingAppRemoteView(Context context) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
-
-        Intent intent = new Intent(context, RecipeDetail.class);
-        views.setRemoteAdapter(R.id.appwidget_text, intent);
-
-        // Set the PlantDetailActivity intent to launch when clicked
-        Intent appIntent = new Intent(context, RecipeDetail.class);
-        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.appwidget_text, appPendingIntent);
-        // Handle empty gardens
-        views.setEmptyView(R.id.appwidget_ll, R.id.appwidget_text);
-        return views;
     }
 
     @Override
