@@ -65,6 +65,7 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
         view.setBackgroundColor(getResources().getColor(R.color.activityBackground));
 
         Window window = this.getWindow();
+
         if (Build.VERSION.SDK_INT >= 21) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -110,6 +111,7 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
             setupPortraitMode();
 
         }
+
         setTitle(mTitle);
         setUpAdapters(mSteps, mIngredients);
     }

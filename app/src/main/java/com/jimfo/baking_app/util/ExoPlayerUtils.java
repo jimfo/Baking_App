@@ -29,7 +29,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
     public SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     public MediaSessionCompat mMediaSession;
-    public PlaybackStateCompat.Builder mStateBuilder;
+    private PlaybackStateCompat.Builder mStateBuilder;
     private long mPosition;
     private Context mContext;
 
@@ -96,7 +96,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
             mExoPlayer.seekTo(position);
 
             // Set the ExoPlayer.EventListener to this activity.
-            //            mExoPlayer.addListener(this);
+            mExoPlayer.addListener(this);
 
             // Prepare the MediaSource.
             String userAgent = Util.getUserAgent(mContext, "BakingApp");
@@ -109,7 +109,6 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
 
     public void releasePlayer() {
         if (mExoPlayer != null) {
-            setmPosition(mExoPlayer.getCurrentPosition());
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
@@ -142,7 +141,6 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
                     mExoPlayer.getCurrentPosition(), 1f
             );
         }
-        setmPosition(mExoPlayer.getCurrentPosition());
         mMediaSession.setPlaybackState(mStateBuilder.build());
     }
 

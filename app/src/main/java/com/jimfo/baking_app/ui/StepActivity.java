@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.util.Util;
 import com.jimfo.baking_app.R;
@@ -42,8 +43,10 @@ public class StepActivity extends AppCompatActivity {
         SimpleExoPlayerView mPlayerView = findViewById(R.id.playerView);
         mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
+
+        mPosition = C.TIME_UNSET;
         if (savedInstanceState != null) {
-            mPosition = savedInstanceState.getLong(STATE);
+            mPosition = savedInstanceState.getLong(STATE, C.TIME_UNSET);
             mVideoPath = Uri.parse(savedInstanceState.getString(VIDEO));
         }
 
@@ -121,6 +124,7 @@ public class StepActivity extends AppCompatActivity {
         super.onPause();
 
         if ((Util.SDK_INT <= 23) || mPlayerUtils.mExoPlayer != null) {
+            mPosition = mPlayerUtils.getmPosition();
             mPlayerUtils.mExoPlayer.stop();
             mPlayerUtils.mExoPlayer.release();
             mPlayerUtils.mExoPlayer = null;
