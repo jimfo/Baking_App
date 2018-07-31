@@ -12,8 +12,9 @@ import java.util.List;
 
 public class SharedPreference {
 
+    // http://androidopentutorials.com/android-how-to-store-list-of-values-in-sharedpreferences/
+
     public static final String PREFS_NAME = "Ingredient_List";
-    public static final String RECIPE_TITLE = "recipe_title";
     public static final String INGREDIENTS = "Ingredients";
 
     public SharedPreference() {
@@ -35,26 +36,6 @@ public class SharedPreference {
         editor.putString(INGREDIENTS, jsonIngredients);
 
         editor.apply();
-    }
-
-    public void addIngredient(Context context, Ingredient ingredient) {
-
-        ArrayList<Ingredient> ingredients = getIngredients(context);
-
-        if (ingredients == null)
-            ingredients = new ArrayList<>();
-
-        ingredients.add(ingredient);
-
-        saveIngredients(context, ingredients);
-    }
-
-    public void removeIngredients(Context context) {
-
-        SharedPreferences pref = context.getSharedPreferences("MyPref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.clear().apply();
-
     }
 
     public ArrayList<Ingredient> getIngredients(Context context) {

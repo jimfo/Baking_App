@@ -22,36 +22,45 @@
             android:id="@+id/recipe_icon_iv"
             android:layout_width="@dimen/imageview_dimen"
             android:layout_height="@dimen/imageview_dimen"
-            android:paddingRight="@dimen/standard_padding"
-            android:paddingEnd="@dimen/standard_padding"
+            android:padding="@dimen/standard_padding"
+            android:contentDescription="@string/content_description"
             android:gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/recipe_title_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/recipe_title"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_toRightOf="@id/recipe_icon_iv"
-            android:layout_toEndOf="@id/recipe_icon_iv"
-            android:textSize="16sp"
-            android:fontFamily="casual"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:textColor="@color/textColor"
-            android:gravity="bottom"
-            tools:text="RECIPE TITLE"/>
+            android:layout_toEndOf="@id/recipe_icon_iv">
 
-        <TextView
-            android:id="@+id/serving_size_tv"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/serving_height"
-            android:layout_toRightOf="@id/recipe_icon_iv"
-            android:layout_toEndOf="@id/recipe_icon_iv"
-            android:layout_below="@id/recipe_title_tv"
-            android:textSize="14sp"
-            android:text="@string/serving_size"
-            android:textColor="@color/textColor"
-            android:gravity="top"
-            tools:text="Servings 8"/>
+            <TextView
+                android:id="@+id/recipe_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/standard_padding"
+                android:layout_gravity="bottom"
+                android:textSize="16sp"
+                android:fontFamily="casual"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/textColor"
+                android:gravity="bottom"
+                tools:text="RECIPE TITLE"/>
+
+            <TextView
+                android:id="@+id/serving_size_tv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/standard_padding"
+                android:layout_gravity="top"
+                android:textSize="14sp"
+                android:text="@string/serving_size"
+                android:textColor="@color/textColor"
+                android:gravity="top"
+                tools:text="Servings 8"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
