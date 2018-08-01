@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.util.Util;
 import com.jimfo.baking_app.R;
@@ -24,8 +23,10 @@ import com.jimfo.baking_app.util.ExoPlayerUtils;
 public class StepActivity extends AppCompatActivity {
 
     private static final String TAG = StepActivity.class.getSimpleName();
+
     private static final String STATE = "STATE";
     private static final String VIDEO = "VIDEO";
+
     private ExoPlayerUtils mPlayerUtils;
     private Uri mVideoPath = null;
     private Step mStep;
@@ -43,13 +44,6 @@ public class StepActivity extends AppCompatActivity {
         SimpleExoPlayerView mPlayerView = findViewById(R.id.playerView);
         mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
-
-        mPosition = C.TIME_UNSET;
-        if (savedInstanceState != null) {
-            mPosition = savedInstanceState.getLong(STATE, C.TIME_UNSET);
-            mVideoPath = Uri.parse(savedInstanceState.getString(VIDEO));
-        }
-
         Intent i = getIntent();
         Bundle extras = i.getExtras();
 
@@ -61,7 +55,7 @@ public class StepActivity extends AppCompatActivity {
                 subTitle = mStep.getmShortDescription();
                 setTitle(title);
 
-                if (!mStep.getmVideoUrl().equals("")) {
+                if (!mStep.getmVideoUrl().isEmpty()) {
                     mVideoPath = Uri.parse(mStep.getmVideoUrl());
                 }
             }
@@ -89,7 +83,7 @@ public class StepActivity extends AppCompatActivity {
 
         mPlayerUtils.initializeMediaSession();
 
-        mPlayerUtils.initializePlayer(mVideoPath, mPosition);
+        mPlayerUtils.initializePlayer(mVideoPath, 0);
     }
 
     @Override
@@ -98,6 +92,14 @@ public class StepActivity extends AppCompatActivity {
 
         outState.putLong(STATE, mPlayerUtils.getmPosition());
         outState.putString(VIDEO, mStep.getmVideoUrl());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+
+        mPosition = inState.getLong(STATE);
+        mVideoPath = Uri.parse(inState.getString(VIDEO));
     }
 
     @Override
@@ -117,7 +119,6 @@ public class StepActivity extends AppCompatActivity {
             mPlayerUtils.initializePlayer(mVideoPath, mPosition);
         }
     }
-
 
     @Override
     public void onPause() {

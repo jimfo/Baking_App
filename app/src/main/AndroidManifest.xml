@@ -19,9 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.RecipeDetail">
         </activity>
-        <activity android:name=".ui.StepActivity">
+
+        <activity android:name=".ui.StepActivity"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
         </activity>
 
         <receiver android:name=".BakingAppWidget">

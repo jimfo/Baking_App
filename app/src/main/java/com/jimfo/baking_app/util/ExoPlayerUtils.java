@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -26,6 +27,7 @@ import com.google.android.exoplayer2.util.Util;
 public class ExoPlayerUtils implements ExoPlayer.EventListener  {
 
     private static final String TAG = ExoPlayerUtils.class.getSimpleName();
+
     public SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     public MediaSessionCompat mMediaSession;
@@ -136,11 +138,14 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     mExoPlayer.getCurrentPosition(), 1f
             );
+            setmPosition(mExoPlayer.getCurrentPosition());
         } else if ((playbackState == ExoPlayer.STATE_READY)) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     mExoPlayer.getCurrentPosition(), 1f
             );
+            setmPosition(mExoPlayer.getCurrentPosition());
         }
+        Log.i(TAG, "Current Position : " + mExoPlayer.getCurrentPosition());
         mMediaSession.setPlaybackState(mStateBuilder.build());
     }
 
