@@ -42,7 +42,6 @@ public class StepActivity extends AppCompatActivity {
         String subTitle = "";
         TextView stepDescription = findViewById(R.id.step_description_tv);
         SimpleExoPlayerView mPlayerView = findViewById(R.id.playerView);
-        mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
         Intent i = getIntent();
         Bundle extras = i.getExtras();
@@ -60,6 +59,8 @@ public class StepActivity extends AppCompatActivity {
                 }
             }
         }
+
+        mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.activityBackground));
@@ -83,7 +84,7 @@ public class StepActivity extends AppCompatActivity {
 
         mPlayerUtils.initializeMediaSession();
 
-        mPlayerUtils.initializePlayer(mVideoPath, 0);
+        mPlayerUtils.initializePlayer(mVideoPath, mPosition);
     }
 
     @Override

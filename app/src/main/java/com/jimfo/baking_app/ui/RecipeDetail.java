@@ -43,8 +43,6 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
     private ArrayList<Ingredient> mIngredients;
     private TextView stepDescription;
     private ExoPlayerUtils mPlayerUtils;
-    private long mPosition;
-    private Uri mVideoPath = null;
     private SimpleExoPlayerView mPlayerView;
     private boolean mTwoPane;
     private ActionBar bar;
@@ -57,6 +55,7 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
         mStepRV = findViewById(R.id.step_rv);
         mIngredientRV = findViewById(R.id.ingredient_rv);
         mPlayerView = findViewById(R.id.playerView);
+
         mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
         bar = getSupportActionBar();
@@ -172,15 +171,18 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
     public void onItemClickListener(int itemId) {
 
         Step step = mSteps.get(itemId);
-        mVideoPath = Uri.parse(step.getmVideoUrl());
+        Uri mVideoPath = Uri.parse(step.getmVideoUrl());
 
         if (mTwoPane){
-            mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
+
             mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
                     (getResources(), R.drawable.no_video));
 
+            mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
+
             mPlayerUtils.initializeMediaSession();
-            mPlayerUtils.initializePlayer(mVideoPath, mPosition);
+            mPlayerUtils.initializePlayer(mVideoPath, 0);
+
             bar.setSubtitle(step.getmShortDescription());
             stepDescription.setText(step.getmDescription());
         }
