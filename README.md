@@ -60,3 +60,7 @@ One of the skills you will demonstrate in this project is how to handle unexpect
 ![screenshot_2018-08-01-19-54-51](https://user-images.githubusercontent.com/5784029/43555681-b8679240-95c9-11e8-8443-a49452738c86.png)
 ![screenshot_2018-08-01-20-27-14](https://user-images.githubusercontent.com/5784029/43555665-a78183fa-95c9-11e8-9ef7-82db6a0ed846.png)
 ![screenshot_2018-08-01-19-55-03](https://user-images.githubusercontent.com/5784029/43555686-be0a5624-95c9-11e8-9120-0f909779d85e.png)
+
+![screenshot_2018-08-01-20-07-55](https://user-images.githubusercontent.com/5784029/43555712-e98ef8b8-95c9-11e8-84e0-089d0f9754b8.png)
+![screenshot_2018-08-01-20-08-03](https://user-images.githubusercontent.com/5784029/43555716-efeb8e6a-95c9-11e8-9e95-1bcdabb6e45f.png)
+![screenshot_2018-08-01-20-08-50](https://user-images.githubusercontent.com/5784029/43555725-f995679c-95c9-11e8-828b-94ed303e8970.png)
