@@ -61,5 +61,6 @@ One of the skills you will demonstrate in this project is how to handle unexpect
 ![screenshot_2018-08-01-20-27-14](https://user-images.githubusercontent.com/5784029/43555665-a78183fa-95c9-11e8-9ef7-82db6a0ed846.png)
 
 
-TwoPane Layout for Tablets
+### TwoPane Layout for Tablets
+
 ![screenshot_2018-08-01-20-08-50](https://user-images.githubusercontent.com/5784029/43555855-af205b1c-95ca-11e8-8234-a108bfb4283f.png)
