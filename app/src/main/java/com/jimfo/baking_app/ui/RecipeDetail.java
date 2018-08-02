@@ -181,7 +181,7 @@ public class RecipeDetail extends AppCompatActivity implements StepAdapter.ItemC
             mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
             mPlayerUtils.initializeMediaSession();
-            mPlayerUtils.initializePlayer(mVideoPath, 0);
+            mPlayerUtils.initializePlayer(mVideoPath, 0, true);
 
             bar.setSubtitle(step.getmShortDescription());
             stepDescription.setText(step.getmDescription());

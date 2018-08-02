@@ -15,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.util.Util;
 import com.jimfo.baking_app.R;
 import com.jimfo.baking_app.model.Step;
 import com.jimfo.baking_app.util.ExoPlayerUtils;
@@ -26,11 +25,14 @@ public class StepActivity extends AppCompatActivity {
 
     private static final String STATE = "STATE";
     private static final String VIDEO = "VIDEO";
+    private static final String POSITION = "POSITION";
 
     private ExoPlayerUtils mPlayerUtils;
     private Uri mVideoPath = null;
     private Step mStep;
     private long mPosition;
+    private boolean mState = true;
+    private String mVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,6 @@ public class StepActivity extends AppCompatActivity {
 
         String subTitle = "";
         TextView stepDescription = findViewById(R.id.step_description_tv);
-        SimpleExoPlayerView mPlayerView = findViewById(R.id.playerView);
 
         Intent i = getIntent();
         Bundle extras = i.getExtras();
@@ -55,12 +56,11 @@ public class StepActivity extends AppCompatActivity {
                 setTitle(title);
 
                 if (!mStep.getmVideoUrl().isEmpty()) {
-                    mVideoPath = Uri.parse(mStep.getmVideoUrl());
+                    mVideo = mStep.getmVideoUrl();
+                    mVideoPath = Uri.parse(mVideo);
                 }
             }
         }
-
-        mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
 
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.activityBackground));
@@ -78,20 +78,33 @@ public class StepActivity extends AppCompatActivity {
                 bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.activityBackground)));
             }
         }
+        
+        if (savedInstanceState != null) {
+            mState = savedInstanceState.getBoolean(STATE);
+            mPosition = savedInstanceState.getLong(POSITION);
+            mVideoPath = Uri.parse(savedInstanceState.getString(VIDEO));
+        }
 
+        setupPlayer();
+
+    }
+
+    public void setupPlayer() {
+
+        SimpleExoPlayerView mPlayerView = findViewById(R.id.playerView);
+        mPlayerUtils = new ExoPlayerUtils(this, mPlayerView);
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
                 (getResources(), R.drawable.no_video));
-
         mPlayerUtils.initializeMediaSession();
-
-        mPlayerUtils.initializePlayer(mVideoPath, mPosition);
+        mPlayerUtils.initializePlayer(mVideoPath, mPosition, mState);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putLong(STATE, mPlayerUtils.getmPosition());
+        outState.putBoolean(STATE, mPlayerUtils.mExoPlayer.getPlayWhenReady());
+        outState.putLong(POSITION, mPlayerUtils.mExoPlayer.getCurrentPosition());
         outState.putString(VIDEO, mStep.getmVideoUrl());
     }
 
@@ -99,8 +112,9 @@ public class StepActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle inState) {
         super.onRestoreInstanceState(inState);
 
-        mPosition = inState.getLong(STATE);
-        mVideoPath = Uri.parse(inState.getString(VIDEO));
+        mState = inState.getBoolean(STATE);
+        mPosition = inState.getLong(POSITION);
+        mVideo = inState.getString(VIDEO);
     }
 
     @Override
@@ -115,9 +129,8 @@ public class StepActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if ((Util.SDK_INT <= 23 || mPlayerUtils.mExoPlayer == null)) {
-            mPlayerUtils.initializeMediaSession();
-            mPlayerUtils.initializePlayer(mVideoPath, mPosition);
+        if (mPlayerUtils.mExoPlayer != null) {
+            setupPlayer();
         }
     }
 
@@ -125,11 +138,10 @@ public class StepActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
 
-        if ((Util.SDK_INT <= 23) || mPlayerUtils.mExoPlayer != null) {
-            mPosition = mPlayerUtils.getmPosition();
-            mPlayerUtils.mExoPlayer.stop();
-            mPlayerUtils.mExoPlayer.release();
-            mPlayerUtils.mExoPlayer = null;
+        if (mPlayerUtils.mExoPlayer != null) {
+            mPosition = mPlayerUtils.mExoPlayer.getCurrentPosition();
+            mState = mPlayerUtils.mExoPlayer.getPlayWhenReady();
+            mVideo = mStep.getmVideoUrl();
         }
     }
 
@@ -137,8 +149,8 @@ public class StepActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-        if (Util.SDK_INT > 23) {
-            mPlayerUtils.releasePlayer();
+        if (mPlayerUtils.mExoPlayer != null) {
+            mPlayerUtils.mExoPlayer.release();
         }
     }
 

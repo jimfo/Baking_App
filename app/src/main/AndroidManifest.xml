@@ -23,8 +23,7 @@
         <activity android:name=".ui.RecipeDetail">
         </activity>
 
-        <activity android:name=".ui.StepActivity"
-                  android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode">
+        <activity android:name=".ui.StepActivity">
         </activity>
 
         <receiver android:name=".BakingAppWidget">

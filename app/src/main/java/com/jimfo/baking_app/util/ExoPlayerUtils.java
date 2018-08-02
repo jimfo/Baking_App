@@ -31,7 +31,6 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
     private SimpleExoPlayerView mPlayerView;
     public MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
-    private long mPosition;
     private Context mContext;
 
     public ExoPlayerUtils(Context context, SimpleExoPlayerView playerView){
@@ -39,13 +38,6 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
         this.mPlayerView = playerView;
     }
 
-    public long getmPosition(){
-        return mPosition;
-    }
-
-    public void setmPosition(long position){
-        this.mPosition = position;
-    }
     /**
      * Initializes the Media Session to be enabled with media buttons, transport controls, callbacks
      * and media controller.
@@ -86,7 +78,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
      *
      * @param mediaUri The URI of the sample to play.
      */
-    public void initializePlayer(Uri mediaUri, long position) {
+    public void initializePlayer(Uri mediaUri, long position, boolean state) {
         if (mExoPlayer == null) {
             // Create an instance of the ExoPlayer.
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -104,7 +96,7 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     mContext, userAgent), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.setPlayWhenReady(state);
         }
     }
 
@@ -114,6 +106,14 @@ public class ExoPlayerUtils implements ExoPlayer.EventListener  {
             mExoPlayer.release();
             mExoPlayer = null;
         }
+    }
+
+    public void pausePlayer() {
+        mExoPlayer.setPlayWhenReady(false);
+    }
+
+    public void startPlayer() {
+        mExoPlayer.setPlayWhenReady(true);
     }
 
     @Override

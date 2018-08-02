@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.jimfo.baking_app.BakingAppWidget;
 import com.jimfo.baking_app.R;
@@ -23,6 +24,7 @@ import com.jimfo.baking_app.RecipeTask;
 import com.jimfo.baking_app.adapter.RecipeAdapter;
 import com.jimfo.baking_app.model.Ingredient;
 import com.jimfo.baking_app.model.Recipe;
+import com.jimfo.baking_app.util.NetworkUtils;
 import com.jimfo.baking_app.util.SharedPreference;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements RecipeTask.PostEx
         view.setBackgroundColor(getResources().getColor(R.color.activityBackground));
 
         mRecyclerView = findViewById(R.id.recipe_list);
+        TextView emptyTv = findViewById(R.id.empty_view);
 
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= 21) {
@@ -59,7 +62,15 @@ public class MainActivity extends AppCompatActivity implements RecipeTask.PostEx
             }
         }
 
-        new RecipeTask(this, this).execute();
+        if (NetworkUtils.isNetworkAvailable(this.getApplicationContext())) {
+            new RecipeTask(this, this).execute();
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyTv.setVisibility(View.GONE);
+        } else {
+            emptyTv.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
