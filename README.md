@@ -55,10 +55,4 @@ One of the skills you will demonstrate in this project is how to handle unexpect
 - [x]Widget displays ingredient list for desired recipe.
 
 ### Project Photos
-![screenshot_2018-08-01-19-54-34](https://user-images.githubusercontent.com/5784029/43555424-fd0b5dd4-95c7-11e8-83d1-8e8f6cfe3248.png)
-![screenshot_2018-08-01-19-54-44](https://user-images.githubusercontent.com/5784029/43555426-01f7e0a6-95c8-11e8-8138-14b0db5de64a.png)
-![screenshot_2018-08-01-19-54-51](https://user-images.githubusercontent.com/5784029/43555428-04ef9128-95c8-11e8-90ad-353f1b9973ff.png)
-![screenshot_2018-08-01-19-55-03](https://user-images.githubusercontent.com/5784029/43555431-08d54e0e-95c8-11e8-9760-28b1976b2813.png)
-![screenshot_2018-08-01-20-07-55](https://user-images.githubusercontent.com/5784029/43555434-0e6f3f96-95c8-11e8-9ad3-14083d53113a.png)
-![screenshot_2018-08-01-20-08-03](https://user-images.githubusercontent.com/5784029/43555436-1256e794-95c8-11e8-9ac6-8727d4dedf55.png)
-![screenshot_2018-08-01-20-08-50](https://user-images.githubusercontent.com/5784029/43555438-153f8a88-95c8-11e8-89f1-955b78dd59d4.png)
+
